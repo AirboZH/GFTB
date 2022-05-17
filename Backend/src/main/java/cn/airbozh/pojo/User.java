@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 
 @Repository
-@JsonIgnoreProperties({ "password" })
+@JsonIgnoreProperties(value = "password",allowSetters = true)
 public class User {
     private int userId;
     private String userName;
+
     private String password;
     private int role;
     private String address;

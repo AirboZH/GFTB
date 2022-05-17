@@ -2,6 +2,7 @@ package cn.airbozh.controller;
 
 import cn.airbozh.pojo.User;
 import cn.airbozh.service.UserService;
+import cn.airbozh.utility.Auth;
 import cn.airbozh.utility.ResMsg;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -24,6 +25,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{userId}",method = RequestMethod.GET)
+    @Auth
     public ResMsg<?> getUserById(@PathVariable("userId") int userId) {
         User user = userService.findUserById(userId);
         if (user == null) {
