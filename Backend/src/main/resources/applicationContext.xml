@@ -13,7 +13,6 @@
     <!--扫包 -->
     <context:component-scan base-package="cn.airbozh"/>
 
-    <context:annotation-config/>
     <aop:aspectj-autoproxy/>
 
     <!--加载数据库配置文件-->

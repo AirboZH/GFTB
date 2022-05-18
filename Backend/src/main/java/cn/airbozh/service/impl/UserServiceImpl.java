@@ -24,6 +24,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserByName(String userName) {
+        try {
+            return userMapper.findUserByName(userName);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<User> getUsers() {
         return userMapper.getUsers();
     }
@@ -66,6 +75,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUser(int userId) {
         return userMapper.deleteUser(userId) != 0;
+    }
+
+    @Override
+    public boolean userLogin(User user) {
+        return userMapper.findUserByName(user.getUserName()).getPassword().equals(user.getPassword());
     }
 
 
