@@ -1,8 +1,9 @@
 package cn.airbozh.aspect;
 
+import cn.airbozh.pojo.User;
 import cn.airbozh.utility.Auth.AuthException;
 import cn.airbozh.utility.JwtUtil;
-import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -16,32 +17,32 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 @Aspect
-public class AuthorizeAspect {
+public class AuthAspect {
     @Pointcut("@annotation(cn.airbozh.utility.Auth.Auth)")
     private void pointCut() {
     }
 
     @Before("pointCut()")
-    public void before() {
+    public void before(JoinPoint joinPoint) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert attributes != null;
         HttpServletRequest request = attributes.getRequest();
         String token;
-        String info;
         token = request.getHeader("Authorization");
 
         if (token == null)
             throw new AuthException(HttpStatus.BAD_REQUEST, "无Token");
-        token = token.split("Bearer ")[1];
-        info = JwtUtil.verifyToken(token).getBody().getSubject();
-        System.out.println("userId:"+info);
+        try {
+            token = token.split("Bearer ")[1];
+        } catch (Exception e) {
+            throw new AuthException(HttpStatus.BAD_REQUEST, "无效Token");
+        }
+        Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            if (arg instanceof User) {
+                ((User) arg).setUserId(JwtUtil.verifyToken(token).getUserId());
+            }
+        }
+
     }
-//    @After("pointCut()")
-//    public void after(){
-//        System.out.println("-----------------------");
-//    }
-//    @AfterReturning("pointCut()")
-//    public void afterReturning(){
-//        System.out.println("+++++++++++++++");
-//    }
 }

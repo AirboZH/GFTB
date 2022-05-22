@@ -10,13 +10,15 @@ import java.util.Date;
 public class User {
     private int userId;
     private String userName;
-
     private String password;
     private int role;
     private String address;
     private float money;
     private Date createDate;
     private Date updateDate;
+
+    public User() {
+    }
 
     @Override
     public String toString() {

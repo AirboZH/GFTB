@@ -12,4 +12,8 @@ public interface UserService {
     User userUpdate(int userId,User user);
     boolean deleteUser(int userId);
     boolean userLogin(User user);
+    String createToken(User user);
+    User verifyToken(String token);
+
+    float getMoney(int userId);
 }

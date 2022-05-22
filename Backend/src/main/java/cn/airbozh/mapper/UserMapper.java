@@ -24,6 +24,9 @@ public interface UserMapper {
     @Update("Update Users Set userName=#{userName}, address=#{address}, updateDate=#{updateDate} Where userId = #{userId}")
     int updateUser(User user);
 
-    @Delete("delete from Users where userId = #{userId}")
+    @Delete("Delete from Users Where userId = #{userId}")
     int deleteUser(int userId);
+
+    @Update("Update Users Set money=#{money} Where userId = #{userId}")
+    void updateMoney(User user);
 }

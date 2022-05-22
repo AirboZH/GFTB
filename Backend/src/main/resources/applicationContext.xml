@@ -10,6 +10,8 @@
         http://www.springframework.org/schema/aop
         https://www.springframework.org/schema/aop/spring-aop.xsd">
 
+     <import resource="spring-mvc.xml" />
+
     <!--扫包 -->
     <context:component-scan base-package="cn.airbozh"/>
 

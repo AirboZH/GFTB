@@ -3,6 +3,7 @@ package cn.airbozh.service.impl;
 import cn.airbozh.mapper.UserMapper;
 import cn.airbozh.pojo.User;
 import cn.airbozh.service.UserService;
+import cn.airbozh.utility.JwtUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,7 +35,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
-        return userMapper.getUsers();
+        try {
+            return userMapper.getUsers();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -82,5 +87,23 @@ public class UserServiceImpl implements UserService {
         return userMapper.findUserByName(user.getUserName()).getPassword().equals(user.getPassword());
     }
 
+    @Override
+    public String createToken(User user) {
+        return JwtUtil.createToken(user);
+    }
+    @Override
+    public User verifyToken(String token){
+        return JwtUtil.verifyToken(token);
+    }
+
+    @Override
+    public float getMoney(int userId) {
+        float money = userMapper.findUserById(userId).getMoney();
+        User user = new User();
+        user.setUserId(userId);
+        user.setMoney(money+1000);
+        userMapper.updateMoney(user);
+        return userMapper.findUserById(userId).getMoney();
+    }
 
 }
