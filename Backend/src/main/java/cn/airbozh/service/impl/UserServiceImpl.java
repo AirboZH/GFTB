@@ -84,7 +84,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean userLogin(User user) {
-        return userMapper.findUserByName(user.getUserName()).getPassword().equals(user.getPassword());
+        try {
+            return userMapper.findUserByName(user.getUserName()).getPassword().equals(user.getPassword());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

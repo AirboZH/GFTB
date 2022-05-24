@@ -7,6 +7,10 @@ public class Shopping {
     private int shoppingId;
     private int commodityId;
     private int userId;
+    private String commodityName;
+    private String commodityPic;
+    private float commodityPrice;
+
 
     public Shopping() {
     }
@@ -42,5 +46,29 @@ public class Shopping {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getCommodityName() {
+        return commodityName;
+    }
+
+    public void setCommodityName(String commodityName) {
+        this.commodityName = commodityName;
+    }
+
+    public String getCommodityPic() {
+        return commodityPic;
+    }
+
+    public void setCommodityPic(String commodityPic) {
+        this.commodityPic = commodityPic;
+    }
+
+    public float getCommodityPrice() {
+        return commodityPrice;
+    }
+
+    public void setCommodityPrice(float commodityPrice) {
+        this.commodityPrice = commodityPrice;
     }
 }

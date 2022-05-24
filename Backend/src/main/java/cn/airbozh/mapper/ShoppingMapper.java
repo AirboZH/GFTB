@@ -15,7 +15,7 @@ public interface ShoppingMapper {
     @Select("Select * From Shopping Where shoppingId = #{shoppingId}")
     Shopping getShoppingByShoppingId(int shoppingId);
 
-    @Select("Select * From Shopping Where userId = #{userId}")
+    @Select("Select s.shoppingId,c.commodityId,c.commodityName,c.commodityPic,c.commodityPrice From (Select * From Shopping Where userId = #{userId}) s INNER JOIN Commodity c Where c.commodityId = s.commodityId")
     List<Shopping> getShoppingByUserId(int userId);
 
     @Delete("Delete From Shopping Where shoppingId = #{shoppingId}")

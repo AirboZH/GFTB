@@ -20,6 +20,7 @@
     <!--加载数据库配置文件-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
+
     <!--  数据源  -->
     <bean id="alibabaDataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${jdbc.driver}"/>

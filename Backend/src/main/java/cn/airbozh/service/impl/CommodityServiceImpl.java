@@ -20,7 +20,7 @@ public class CommodityServiceImpl implements CommodityService {
                 commodity.setCommodityShow(1);
                 return commodityMapper.createCommodity(commodity) != 0;
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                return false;
             }
         }
         return false;
@@ -34,7 +34,7 @@ public class CommodityServiceImpl implements CommodityService {
                 return null;
             return commodity;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
@@ -78,7 +78,7 @@ public class CommodityServiceImpl implements CommodityService {
         try {
             return commodityMapper.deleteCommodity(commodityId) != 0;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return false;
         }
 
     }
@@ -88,7 +88,7 @@ public class CommodityServiceImpl implements CommodityService {
         try {
             return commodityMapper.getCommodities();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return null;
         }
     }
 }
