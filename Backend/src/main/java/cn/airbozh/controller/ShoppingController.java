@@ -8,6 +8,7 @@ import cn.airbozh.utility.Auth.AuthException;
 import cn.airbozh.utility.ResMsg;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,8 +37,8 @@ public class ShoppingController {
         if (user.getUserId() != userId)
             throw new AuthException(HttpStatus.UNAUTHORIZED, "没有权限");
         List<Shopping> list = shoppingService.getShoppingByUserId(userId);
-        if (list == null)
-            resMsg = new ResMsg<>(0, "Get Fail");
+        if (list.size()==0)
+            resMsg = new ResMsg<>(0, "Get Failed");
         else
             resMsg = new ResMsg<>(1, "Get Success", list);
         return resMsg;

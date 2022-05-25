@@ -2,7 +2,7 @@ import {createRouter,createWebHistory} from "vue-router";
 
 import Account from "./pages/Account.vue";
 import Home from "./pages/Home.vue";
-import Go from "./pages/Go.vue";
+import Goods from "./pages/Goods.vue";
 import Shopping from "./pages/Shopping.vue";
 
 const routes = [
@@ -19,7 +19,7 @@ const routes = [
     {
         path:"/goods/:goodsId",
         name: "Goods",
-        component: Go
+        component: Goods
     },
     {
         path:"/shopping",

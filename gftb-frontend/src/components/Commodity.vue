@@ -3,7 +3,7 @@
         <img
             :src="img"
             class="image"
-            style="width:240px;height: 240px"
+            style="width:240px;height: 240px;object-fit: cover;"
         />
         <div style="padding: 14px;">
           <span>{{name}}</span>

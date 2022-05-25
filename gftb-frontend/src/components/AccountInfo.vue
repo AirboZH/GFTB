@@ -14,7 +14,7 @@
       <div class="username account-info-text">欢迎回来：{{userName}}</div>
       <el-button class="account-button" plain type="primary" @click="goto('shopping')">购物车</el-button>
       <br>
-      <el-button class="account-button" plain type="primary" @click="logOut()">退出</el-button>\
+      <el-button class="account-button" plain type="primary" @click="logOut()">退出</el-button>
     </div>
   </el-card>
 </template>
