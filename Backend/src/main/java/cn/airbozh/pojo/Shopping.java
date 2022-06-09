@@ -1,8 +1,10 @@
 package cn.airbozh.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@JsonIgnoreProperties(value = "userId",allowSetters = true)
 public class Shopping {
     private int shoppingId;
     private int commodityId;
@@ -10,6 +12,7 @@ public class Shopping {
     private String commodityName;
     private String commodityPic;
     private float commodityPrice;
+    private int commodityNum;
 
 
     public Shopping() {
@@ -70,5 +73,13 @@ public class Shopping {
 
     public void setCommodityPrice(float commodityPrice) {
         this.commodityPrice = commodityPrice;
+    }
+
+    public int getCommodityNum() {
+        return commodityNum;
+    }
+
+    public void setCommodityNum(int commodityNum) {
+        this.commodityNum = commodityNum;
     }
 }

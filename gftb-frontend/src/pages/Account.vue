@@ -1,47 +1,46 @@
 <template>
   <div class="account-container"></div>
+  <el-card class="box-card" shadow="hover" style="width: 600px">
+    <el-tabs v-model="activeName" class="demo-tabs">
+      <el-tab-pane label="Login" name="login">
+        <div class="tab-pane-box">
+          <el-input
+              v-model="loginEmail"
+              placeholder="Please input username"
+              type="text"
+          />
+          <el-input
+              v-model="loginPasswd"
+              placeholder="Please input password"
+              show-password
+              type="password"
+          />
+          <el-button :icon="CircleCheck" class="submit-button" type="primary" @click="loginRequest">Login
+          </el-button>
+        </div>
 
-      <el-card class="box-card" shadow="hover" style="width: 600px">
-        <el-tabs v-model="activeName" class="demo-tabs">
-          <el-tab-pane label="Login" name="login">
-            <div class="tab-pane-box">
-              <el-input
-                  v-model="loginEmail"
-                  placeholder="Please input username"
-                  type="text"
-              />
-              <el-input
-                  v-model="loginPasswd"
-                  placeholder="Please input password"
-                  show-password
-                  type="password"
-              />
-              <el-button :icon="CircleCheck" class="submit-button" type="primary" @click="loginRequest">Login
-              </el-button>
-            </div>
+      </el-tab-pane>
+      <el-tab-pane label="Register" name="register">
+        <div class="tab-pane-box">
+          <el-input
+              v-model="registerUsername"
+              placeholder="Please input Username"
+              type="text"
+          />
 
-          </el-tab-pane>
-          <el-tab-pane label="Register" name="register">
-            <div class="tab-pane-box">
-              <el-input
-                  v-model="registerUsername"
-                  placeholder="Please input Username"
-                  type="text"
-              />
-
-              <el-input
-                  v-model="registerPasswd"
-                  placeholder="Please input password"
-                  show-password
-                  type="password"
-              />
-              <el-button :disabled="registerDisable" :icon="CirclePlusFilled" class="submit-button"
-                         type="primary" @click="requestRequest">Register
-              </el-button>
-            </div>
-          </el-tab-pane>
-        </el-tabs>
-      </el-card>
+          <el-input
+              v-model="registerPasswd"
+              placeholder="Please input password"
+              show-password
+              type="password"
+          />
+          <el-button :disabled="registerDisable" :icon="CirclePlusFilled" class="submit-button"
+                     type="primary" @click="requestRequest">Register
+          </el-button>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+  </el-card>
 </template>
 
 <script>
@@ -78,10 +77,10 @@ export default {
               let token = res.data.data
               console.log(res.data);
               if (res.data.code === 1) {
-                localStorage.setItem("token",token)
+                localStorage.setItem("token", token)
                 const userInfo = JSON.parse(this.$jwt(token).sub);
-                localStorage.setItem("userId",userInfo.userId)
-                localStorage.setItem("userName",userInfo.userName)
+                localStorage.setItem("userId", userInfo.userId)
+                localStorage.setItem("userName", userInfo.userName)
                 ElMessage({
                   message: '登录成功',
                   type: 'success',
@@ -115,7 +114,7 @@ export default {
                   message: '注册成功',
                   type: 'success',
                 })
-                this.$router.push('/account')
+                this.$router.push('/')
               } else {
                 ElMessage({
                   message: '注册失败',
@@ -127,20 +126,22 @@ export default {
         this.activeName = 'login'
       }
     }
-  },mounted() {
-    if(this.activeName)
+  }, mounted() {
+    if (this.activeName)
       this.activeName = this.$route.params.status
   }
 }
 </script>
 <script setup>import {CirclePlusFilled, CircleCheck} from '@element-plus/icons-vue'</script>
 <style scoped>
-.account-container{
+.account-container {
   margin: 100px;
 }
-.el-input{
+
+.el-input {
   margin: 10px 0;
 }
+
 .tab-pane-box {
   margin: 25px 0 15px 0;
 }

@@ -2,18 +2,25 @@
   <div class="shopping-container">
     <el-table :data="tableData" style="width: 100%;">
       <el-table-column label="CommodityId" prop="commodityId"/>
-      <el-table-column label="Pic" prop="commodityPic">
+      <el-table-column label="Pic">
         <template #default="scope">
           <div style="display: flex; align-items: center">
-            <el-image :src="scope.row.commodityPic" fit="cover" style="width: 80px;height: 80px;overflow: hidden;"/>
+            <el-image :src="scope.row.commodityPic" fit="cover"
+                      style="width: 80px;height: 80px;overflow: hidden;"/>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="Name" prop="commodityName"/>
+      <el-table-column label="Name">
+        <template #default="scope">
+          <a :href="`/goods/${scope.row.commodityId}`">{{ scope.row.commodityName }}</a>
+        </template>
+      </el-table-column>
+      >
       <el-table-column label="Price" prop="commodityPrice"/>
       <el-table-column label="Number">
         <template #default="scope">
-        <el-input-number v-model="scope.row.commodityNum" :max="10" :min="1" @change="handleChange"/>
+          <el-input-number v-model="scope.row.commodityNum" :max="100" :min="1"
+                           @change="handleChange(scope.row.commodityId)"/>
         </template>
       </el-table-column>
       <el-table-column label="Delete">
@@ -28,9 +35,14 @@
         </template>
       </el-table-column>
     </el-table>
-<div class="shopping-footer">
-
-</div>
+    <div class="shopping-footer">
+      <span style="font-size: 20px">已选购物品 </span>
+      <span class="num">{{sumNum}} </span>
+      <span style="margin-right: 120px;font-size: 20px">件</span>
+      <span style="font-size: 20px">总金额：</span>
+      <span class="num" style="margin-right: 120px">{{sumPrice}}</span>
+      <el-button type="danger" round style="margin-right: 130px" @click="oder">购买</el-button>
+    </div>
   </div>
 </template>
 
@@ -44,7 +56,36 @@ export default {
       tableData: [],
       userId: localStorage.userId,
     }
-  }, methods: {
+  },
+  computed:{
+    sumPrice(){
+      let sum = 0
+      for(let oneData of this.tableData){
+        sum += oneData.commodityPrice * oneData.commodityNum
+      }
+      return this.sumPrice = sum.toFixed(2)
+    },
+    sumNum(){
+      let sum = 0
+      for(let oneData of this.tableData){
+        sum += oneData.commodityNum
+      }
+      return sum
+    }
+  },
+  methods: {
+    handleChange(id) {
+      let shoppingInfo = {
+        "commodityId": id,
+        "userId": localStorage.userId
+      }
+      this.$http.post('http://localhost:8080/GFTB/api/shopping', shoppingInfo)
+          .then((res) => {
+            if (res.data.code) {
+              ElMessage({message: '数量修改成功！', type: 'success',})
+            }
+          })
+    },
     handleDelete(a, b) {
       this.$http.delete(`http://localhost:8080/GFTB/api/shopping/${b.shoppingId}`)
           .then((res) => {
@@ -52,8 +93,14 @@ export default {
               ElMessage({message: '删除成功！', type: 'success',})
               this.tableData.splice(a, 1)
             }
-
           })
+    },
+    oder(){
+      // this.$http.post('http://localhost:8080/GFTB/api/oder',)
+      //     .then(res=>{
+      //
+      //     })
+      ElMessage({message: '下单成功！', type: 'success',})
     }
   },
   mounted() {
@@ -71,14 +118,30 @@ export default {
   }
 }
 </script>
-<script setup>
-
-</script>
 <style scoped>
+a, a:visited {
+  color: var(--el-text-color-regular);
+}
+
 .shopping-container {
   width: 100%;
+  padding-bottom: 60px;
 }
-.shopping-footer{
 
+.shopping-footer {
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid var(--el-border-color);
+  height: 60px;
+  width: 1200px;
+  background-color: white;
+  z-index: 200;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+.num{
+  color: rgb(255, 0, 54);
+  font-size: 30px;
 }
 </style>

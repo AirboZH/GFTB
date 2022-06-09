@@ -93,14 +93,16 @@ public class UserController {
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.DELETE)
     @Auth
     public ResMsg<?> deleteUser(@PathVariable("userId") int userId, User user) {
-        if (user.getUserId() != userId)
-            throw new AuthException(HttpStatus.UNAUTHORIZED, "没有权限");
+        if (user.getUserId() == userId || userService.findUserById(user.getUserId()).getRole() == 1) {
+
         if (userService.deleteUser(userId)) {
             resMsg = new ResMsg<>(1, "DeleteUser Success");
         } else {
             resMsg = new ResMsg<>(0, "DeleteUser Fail");
         }
         return resMsg;
+        }else
+            throw new AuthException(HttpStatus.UNAUTHORIZED, "没有权限");
     }
 
     @RequestMapping(value = "/money", method = RequestMethod.GET)

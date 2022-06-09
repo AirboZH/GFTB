@@ -25,7 +25,7 @@ const routes = [
         path:"/shopping",
         name: "Shopping",
         component: Shopping
-    }
+    },
     ]
 
 export default createRouter({

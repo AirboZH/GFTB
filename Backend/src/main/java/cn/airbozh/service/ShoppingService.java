@@ -10,5 +10,4 @@ public interface ShoppingService {
     Shopping getShoppingByShoppingId (int shoppingId);
     List<Shopping> getShoppingByUserId(int userId);
     boolean deleteShopping(int shoppingId);
-
 }

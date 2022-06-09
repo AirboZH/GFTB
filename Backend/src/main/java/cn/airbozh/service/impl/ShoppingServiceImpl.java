@@ -16,6 +16,12 @@ public class ShoppingServiceImpl implements ShoppingService {
     @Override
     public boolean createShopping(Shopping shopping) {
         try {
+            Shopping dbShopping = shoppingMapper.getShoppingByUserIdAndCommodityId(shopping);
+            if(dbShopping != null){
+                dbShopping.setCommodityNum(dbShopping.getCommodityNum()+1);
+                shoppingMapper.updateShoppingByShoppingId(dbShopping);
+                return true;
+            }
             if (shoppingMapper.createShopping(shopping) != 0)
                 return true;
         } catch (Exception e) {

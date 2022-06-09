@@ -2,7 +2,7 @@
   <div v-if="commodityInfo!=null" class="goods-container">
     <el-row style="padding: 60px 0">
       <el-col :span="8" style="display: flex;justify-content: center">
-        <img :src="commodityInfo.commodityPic" style="width: 320px"/>
+        <el-image :src="commodityInfo.commodityPic" style="width: 320px;height: 320px" :preview-src-list="[`${commodityInfo.commodityPic}`]" fit="cover"/>
       </el-col>
       <el-col :span="16" style="padding:10px 80px">
         <h1>{{ commodityInfo.commodityName }}</h1>

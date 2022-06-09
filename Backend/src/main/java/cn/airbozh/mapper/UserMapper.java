@@ -21,7 +21,7 @@ public interface UserMapper {
     @Insert("Insert Into Users (username,password,role,address,money,createDate,updateDate) Values (#{userName},#{password},#{role},#{address},#{money},#{createDate},#{updateDate})")
     int createUser(User user);
 
-    @Update("Update Users Set userName=#{userName}, address=#{address}, updateDate=#{updateDate} Where userId = #{userId}")
+    @Update("Update Users Set userName=#{userName}, address=#{address}, money=#{money}, updateDate=#{updateDate} Where userId = #{userId}")
     int updateUser(User user);
 
     @Delete("Delete from Users Where userId = #{userId}")

@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
             dbUser.setAddress(user.getAddress());
             flag = true;
         }
+            dbUser.setMoney(user.getMoney());
         if (flag) {
             dbUser.setUpdateDate(new Date());
             if (userMapper.updateUser(dbUser) != 0)
