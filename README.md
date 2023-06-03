@@ -227,7 +227,7 @@
 | oderId      | int         | Primary Key Unique Required     |
 | commodityId | int         | Required                        |
 | customerId  | int         | Required                        |
-| oderPrice   | float       | Required                        |
+| oderNumber   | int       | Required                        |
 | oderAddress | varchar(50) | Required                        |
 | oderStatus  | int         | 0已取消 1未发货 2已发货 3已收货 |
 | oderShow    | int         | Required defalut 1              |

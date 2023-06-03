@@ -15,7 +15,6 @@
           <a :href="`/goods/${scope.row.commodityId}`">{{ scope.row.commodityName }}</a>
         </template>
       </el-table-column>
-      >
       <el-table-column label="Price" prop="commodityPrice"/>
       <el-table-column label="Number">
         <template #default="scope">
@@ -37,10 +36,10 @@
     </el-table>
     <div class="shopping-footer">
       <span style="font-size: 20px">已选购物品 </span>
-      <span class="num">{{sumNum}} </span>
+      <span class="num">{{ sumNum }} </span>
       <span style="margin-right: 120px;font-size: 20px">件</span>
       <span style="font-size: 20px">总金额：</span>
-      <span class="num" style="margin-right: 120px">{{sumPrice}}</span>
+      <span class="num" style="margin-right: 120px">{{ sumPrice }}</span>
       <el-button type="danger" round style="margin-right: 130px" @click="oder">购买</el-button>
     </div>
   </div>
@@ -57,17 +56,17 @@ export default {
       userId: localStorage.userId,
     }
   },
-  computed:{
-    sumPrice(){
+  computed: {
+    sumPrice() {
       let sum = 0
-      for(let oneData of this.tableData){
+      for (let oneData of this.tableData) {
         sum += oneData.commodityPrice * oneData.commodityNum
       }
       return this.sumPrice = sum.toFixed(2)
     },
-    sumNum(){
+    sumNum() {
       let sum = 0
-      for(let oneData of this.tableData){
+      for (let oneData of this.tableData) {
         sum += oneData.commodityNum
       }
       return sum
@@ -95,11 +94,17 @@ export default {
             }
           })
     },
-    oder(){
-      // this.$http.post('http://localhost:8080/GFTB/api/oder',)
-      //     .then(res=>{
-      //
-      //     })
+    oder() {
+      for (let oneData of this.tableData) {
+        let oderInfo = {
+          "commodityId": oneData.commodityId,
+          "oderNumber": oneData.commodityNum
+        }
+        this.$http.post('http://localhost:8080/GFTB/api/oder', oderInfo)
+            .then(res => {
+              console.log(res.data)
+            })
+      }
       ElMessage({message: '下单成功！', type: 'success',})
     }
   },
@@ -140,7 +145,8 @@ a, a:visited {
   justify-content: right;
   align-items: center;
 }
-.num{
+
+.num {
   color: rgb(255, 0, 54);
   font-size: 30px;
 }

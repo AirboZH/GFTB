@@ -15,7 +15,7 @@ create table Oder
     oderId      int         null,
     commodityId int         null,
     customerId  int         null,
-    oderPrice   float       null,
+    oderNumber   int       null,
     oderAddress varchar(64) null,
     oderStatus  int         null,
     oderShow    int         null,

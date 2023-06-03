@@ -9,7 +9,7 @@ public class Oder {
     private int oderId;
     private int commodityId;
     private int customerId;
-    private float oderPrice;
+    private int oderNumber;
     private String oderAddress;
     private int oderStatus;
     private int oderShow;
@@ -43,12 +43,12 @@ public class Oder {
         this.customerId = customerId;
     }
 
-    public float getOderPrice() {
-        return oderPrice;
+    public int getOderNumber() {
+        return oderNumber;
     }
 
-    public void setOderPrice(float oderPrice) {
-        this.oderPrice = oderPrice;
+    public void setOderNumber(int oderNumber) {
+        this.oderNumber = oderNumber;
     }
 
     public String getOderAddress() {
@@ -89,5 +89,20 @@ public class Oder {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Oder{" +
+                "oderId=" + oderId +
+                ", commodityId=" + commodityId +
+                ", customerId=" + customerId +
+                ", oderNumber=" + oderNumber +
+                ", oderAddress='" + oderAddress + '\'' +
+                ", oderStatus=" + oderStatus +
+                ", oderShow=" + oderShow +
+                ", createDate=" + createDate +
+                ", updateDate=" + updateDate +
+                '}';
     }
 }
