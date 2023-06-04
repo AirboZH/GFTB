@@ -10,7 +10,7 @@
       <el-button class="account-button" plain type="primary" @click="goto('account/register')">注册</el-button>
     </div>
     <div v-else class="account-info">
-      <img src="https://www.airbozh.cn/images/myavatar.jpg" style="border-radius: 50%;width: 50%" >
+      <img src="https://cdn.airbozh.cn/blog/info.jpg" style="border-radius: 50%;width: 50%" >
       <div class="username account-info-text">欢迎回来：{{userName}}</div>
       <el-button class="account-button" plain type="primary" @click="goto('shopping')">购物车</el-button>
       <br>

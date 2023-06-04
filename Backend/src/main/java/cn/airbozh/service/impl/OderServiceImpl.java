@@ -28,7 +28,11 @@ public class OderServiceImpl implements OderService {
     @Override
     public List<Oder> getOderByCustomerId() {
         List<Oder> list = oderMapper.getOderByCustomerId();
-        System.out.println(list);
         return list;
+    }
+
+    @Override
+    public boolean updateOderStatus(int oderId, int status) {
+        return oderMapper.updateOderStatus(oderId, status);
     }
 }

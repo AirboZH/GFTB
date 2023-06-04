@@ -1,11 +1,6 @@
 <template>
   <el-table :data="tableData.slice((page-1)*7,page*7)" style="width: 100%">
-    <el-table-column label="Id" width="180">
-      <template #default="scope">
-        <div style="display: flex; align-items: center">
-          <span style="margin-left: 10px">{{ scope.row.commodityId }}</span>
-        </div>
-      </template>
+    <el-table-column label="Id" prop="commodityId" sortable width="180">
     </el-table-column>
     <el-table-column label="商品名">
       <template #default="scope">
@@ -19,18 +14,18 @@
     <el-table-column label="地址" prop="oderAddress" width="280">
     </el-table-column>
     <el-table-column label="操作">
-      <template #default="scope">
-        <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
-        >Edit
-        </el-button
-        >
-        <el-button
-            size="small"
-            type="danger"
-            @click="handleDelete(scope.row.oderId,)"
-        >Delete
-        </el-button
-        >
+      <template #default="scope" >
+        <el-dropdown size="small" split-button type="primary">
+          {{ scope.row.oderStatus === 0 ? '已下单' : scope.row.oderStatus === 1 ? '已发货' : scope.row.oderStatus === 2 ? '已收货' : '已完成' }}
+          <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="oderOperation(scope.row,0)">已下单</el-dropdown-item>
+            <el-dropdown-item @click="oderOperation(scope.row,1)">已发货</el-dropdown-item>
+            <el-dropdown-item @click="oderOperation(scope.row,2)">已收货</el-dropdown-item>
+            <el-dropdown-item @click="oderOperation(scope.row,3)">已完成</el-dropdown-item>
+          </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </template>
     </el-table-column>
   </el-table>
@@ -43,119 +38,6 @@
                    layout="prev, pager, next"/>
 
   </div>
-
-  <!--  对话框-->
-  <el-dialog
-      v-model="dialogVisible"
-      title="编辑商品"
-      width="30%"
-  >
-    <el-form
-        :label-position="'top'"
-        :model="formLabelAlign"
-        label-width="100px"
-        style="max-width: 460px"
-    >
-      <el-form-item label="商品名">
-        <el-input v-model="formLabelAlign.commodityName"/>
-      </el-form-item>
-      <el-form-item label="图片">
-        <div class="img-upload" style="padding-left: 30px">
-          <el-upload
-              :before-upload="beforeAvatarUpload"
-              :on-success="handleAvatarSuccess"
-              :show-file-list="false"
-              action="http://localhost:8080/GFTB/api/commodity/upload"
-              class="avatar-uploader"
-          >
-            <img v-if="formLabelAlign.commodityPic" :src="formLabelAlign.commodityPic" class="avatar"/>
-            <el-icon v-else class="avatar-uploader-icon">
-              <Plus/>
-            </el-icon>
-          </el-upload>
-        </div>
-      </el-form-item>
-      <el-form-item label="标签">
-        <el-select v-model="formLabelAlign.commodityTag" placeholder="please select your zone">
-          <el-option label="服装" value="服装" />
-          <el-option label="玩具" value="玩具" />
-          <el-option label="人物" value="人物" />
-          <el-option label="饮料" value="饮料" />
-          <el-option label="家具" value="家具" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="价格">
-        <el-input v-model="formLabelAlign.commodityPrice"/>
-      </el-form-item>
-      <el-form-item label="详情">
-        <el-input v-model="formLabelAlign.commodityDetail"/>
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="handleSave"
-        >Confirm</el-button
-        >
-      </span>
-    </template>
-  </el-dialog>
-
-  <el-dialog
-      v-model="addDialogVisible"
-      title="新增商品"
-      width="30%"
-  >
-    <el-form
-        :label-position="'top'"
-        :model="addCommodity"
-        label-width="100px"
-        style="max-width: 460px"
-    >
-      <el-form-item label="商品名">
-        <el-input v-model="addCommodity.commodityName"/>
-      </el-form-item>
-      <el-form-item label="图片">
-        <div class="img-upload" style="padding-left: 30px">
-          <el-upload
-              :before-upload="beforeAvatarUpload"
-              :on-success="addHandleAvatarSuccess"
-              :show-file-list="false"
-              action="http://localhost:8080/GFTB/api/commodity/upload"
-              class="avatar-uploader"
-          >
-            <img v-if="addCommodity.commodityPic" :src="addCommodity.commodityPic" class="avatar"/>
-            <el-icon v-else class="avatar-uploader-icon">
-              <Plus/>
-            </el-icon>
-          </el-upload>
-        </div>
-      </el-form-item>
-      <el-form-item label="标签">
-        <el-select v-model="addCommodity.commodityTag" placeholder="please select your zone">
-          <el-option label="服装" value="服装" />
-          <el-option label="玩具" value="玩具" />
-          <el-option label="人物" value="人物" />
-          <el-option label="饮料" value="饮料" />
-          <el-option label="家具" value="家具" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="价格">
-        <el-input v-model="addCommodity.commodityPrice"/>
-      </el-form-item>
-      <el-form-item label="详情">
-        <el-input v-model="addCommodity.commodityDetail"/>
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="addDialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="saveAdd"
-        >Confirm</el-button
-        >
-      </span>
-    </template>
-  </el-dialog>
 </template>
 <script setup>
 import {Plus} from '@element-plus/icons-vue'</script>
@@ -174,24 +56,21 @@ export default {
     }
   },
   methods: {
-    handleEdit(a) {
-      this.formLabelAlign = this.tableData[(this.page-1)*7 + a]
-      this.dialogVisible = true
+    oderOperation(oder,status){
+      this.$http.post(`http://localhost:8080/GFTB/api/oder/${oder.oderId}/${status}`)
+          .then(res=>{
+            console.log(res.data)
+            if (res.data.code) {
+              ElMessage({message: '操作成功！', type: 'success',})
+              location.reload()
+            }
+          })
     },
     handleSave() {
       this.$http.patch(`http://localhost:8080/GFTB/api/commodity/${this.formLabelAlign.commodityId}`, this.formLabelAlign)
           .then((res) => {
             if (res.data.code) {
               ElMessage({message: '更新成功！', type: 'success',})
-              location.reload()
-            }
-          })
-    },
-    handleDelete(commodityId) {
-      this.$http.delete(`http://localhost:8080/GFTB/api/commodity/${commodityId}`)
-          .then((res) => {
-            if (res.data.code) {
-              ElMessage({message: '删除成功！', type: 'success',})
               location.reload()
             }
           })

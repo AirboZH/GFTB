@@ -8,6 +8,7 @@ import cn.airbozh.service.ShoppingService;
 import cn.airbozh.utility.Auth.Auth;
 import cn.airbozh.utility.Auth.AuthException;
 import cn.airbozh.utility.ResMsg;
+import com.mysql.cj.log.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,4 +43,15 @@ public class OderController {
             resMsg = new ResMsg<>(0, "Add Fail");
         return resMsg;
     }
+
+    @PostMapping("/oder/{oderId}/{status}")
+    @Auth
+    public ResMsg<?> updateOderStatus(@PathVariable("oderId") int oderId, @PathVariable("status") int status) {
+        if (oderService.updateOderStatus(oderId, status))
+            resMsg = new ResMsg<>(1, "Update Success");
+        else
+            resMsg = new ResMsg<>(0, "Update Fail");
+        return resMsg;
+    }
+
 }

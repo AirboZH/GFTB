@@ -8,4 +8,6 @@ public interface OderService {
     boolean createOder(Oder oder);
 
     List<Oder> getOderByCustomerId();
+
+    boolean updateOderStatus(int oderId, int status);
 }
